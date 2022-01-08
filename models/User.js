@@ -1,118 +1,83 @@
-const mongoose = require('mongoose');
+import { Schema, model } from "mongoose";
+import { isEmail } from "../validators/email-validator";
+import { PasswordStrong } from "../validators/password-validator";
 
-// איפיון משתמש:
-// אימייל (לא ניתן לשינוי)
-// סיסמה
-// נייד
-// שם (פרטי ומשפחה)
-// מגדר
-// עיר
-// כתובת (רחוב ומספר)
-// תאריך לידה
-// היסטוריית משימות
-// ארנק (מספר, והיסטוריית משיכות: תאריך, כמה...)
-// 3 בוליאנים:
-// א. האם עשה opt?
-// ב. האם יש הרשאת מיקום?
-// ג. האם יש הרשאת מצלמה?
-
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   email: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
+    unique: true,
+    validate: isEmail,
+    trim:true
   },
   password: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
+    validate: PasswordStrong
   },
   phone: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
-  name: {
-      first: {
-        type: String,
-        required: true
-    },
-      last: {
-        type: String,
-        required: true
-    },
+  firstname: {
+    type: String,
+    required: true,
+    trim:true
+  },
+  lastname: {
+    type: String,
+    required: true,
+    trim:true
   },
   gender: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
+    enum: {
+      values: ['male', 'female'],
+      message: '{VALUE} is not supported'
+    }
+
   },
   city: {
     type: String,
-    required: true
+    required: true,
+    trim:true
   },
   address: {
-      street: {
-        type: String,
-        required: true
-    },
-      number: {
-        type: String,
-        required: true
-    },
+    type: String,
+    required: true,
+    trim:true,
   },
   dateOfBirth: {
     type: Date,
-    required: true
+    required: true,
   },
-  tasks: [
-      {
-        type: schema.Types.ObjectId,
-        ref: "TaskPerformed"
-    }
-  ],
-  purse: {
-      balance: {
-        type: Number,
-        default: 0
+  activeTask: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Task",
     },
-      withdrawals: [
-          {
-          date: Date,
-          amount: Number
-      }
-    ]
+  ],
+  wallet: {
+    balance: { type: Number, default: 0 },
+    withdrawals: [
+      {
+        date: { type: Date, default: Date.now },
+        amount: { type: Number, default: 0 },
+      },
+    ],
   },
-  isOPT: Boolean,
-  isLocationPermission: Boolean,
-  isCameraPermission: Boolean,
 
-
+  hasCompletedOTP: { type: Boolean },
+  isLocationAllowed: { type: Boolean },
+  isCameraAllowed: { type: Boolean },
 
   created: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  name: {
-    type: String,
-    required: true
-  },
-  category: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  HallOwner: {
-    type: mongoose.Types.ObjectId,
-    ref: 'HallOwner',
-    required: true
-  },
-  KitchenManager: {
-    type: mongoose.Types.ObjectId,
-    ref: 'KitchenManager',
-    required: true
-  }
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = model("User", UserSchema);
 
 module.exports = User;

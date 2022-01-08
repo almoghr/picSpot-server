@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 
-const CompanySchema = new mongoose.Schema({
+const CompanySchema = new Schema({
  
 });
 
-const  Company = mongoose.model('Company', CompanySchema);
+const  Company = model('Company', CompanySchema);
 
-module.exports = Company;
+export default Company;
