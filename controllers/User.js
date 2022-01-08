@@ -77,7 +77,7 @@ export const editUser = async (req, res) => {
   try {
     const user = await getUser({ _id: req.params.id });
     if (!user) {
-      return res.status(404).send();
+      return serverResponse(res, 404, { message: "user does not exist" });
     }
     updates.forEach((update) => (user[update] = req.body[update]));
     await user.save();

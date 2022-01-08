@@ -9,7 +9,7 @@ export const getUser = (userId) => {
 };
 
 export const createUser = (user) => {
-  export const newUser = new User(user);
+  const newUser = new User(user);
   return newUser.save();
 };
 

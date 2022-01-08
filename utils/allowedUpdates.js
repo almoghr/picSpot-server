@@ -13,6 +13,4 @@ export const userAllowedUpdates = [
   "isCameraAllowed",
 ];
 
-export const companyAllowedUpdates = [
-    
-]
+export const companyAllowedUpdates = ["password", "tasks", "logo", "name"];

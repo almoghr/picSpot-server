@@ -52,12 +52,11 @@ const UserSchema = new Schema({
     type: Date,
     required: true,
   },
-  activeTask: [
+  activeTask:
     {
       type: Schema.Types.ObjectId,
       ref: "Task",
     },
-  ],
   wallet: {
     balance: { type: Number, default: 0 },
     withdrawals: [
