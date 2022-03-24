@@ -15,12 +15,12 @@ const CompanySchema = new Schema({
     required: true,
     validate: PasswordStrong,
   },
-  tasks: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Task",
-    },
-  ],
+  // tasks: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "Task",
+  //   },
+  // ],
   logo:{
       type: String,
       required:true,
@@ -31,11 +31,11 @@ const CompanySchema = new Schema({
   },
   created:{
       type: Date,
-      default: Date.now
+      default: Date.now,
   }
   
 });
 
 const Company = model("Company", CompanySchema);
 
-export default Company;
+module.exports = Company;

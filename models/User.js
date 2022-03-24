@@ -56,6 +56,23 @@ const UserSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Task",
+      status: {
+        type: String,
+        required: true,
+        enum: [
+          "Work",
+          "Testing",
+          "Failure_blur",
+          "Failure_dark",
+          "Failure_job_not_done",
+          "Failure_out_of_time",
+          "Success"
+        ],
+      },
+      timeStatus: {
+        type: Date,
+        default: Date.now
+      }
     },
   wallet: {
     balance: { type: Number, default: 0 },

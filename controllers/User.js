@@ -1,4 +1,4 @@
-import { getAllUsers, getUser, deleteUser, createUser } from "../services/User";
+import { getAllUsers, getUser, deleteUser,getUserHistory, createUser } from "../services/User";
 const serverResponse = require("../utils/serverResponse");
 const { userAllowedUpdates } = require("../utils/allowedUpdates");
 
@@ -14,6 +14,28 @@ export const getUserDetails = async (req, res) => {
   } catch (e) {
     return serverResponse(res, 500, {
       message: "Internal error while trying to get user details",
+    });
+  }
+};
+
+export const getUserHistoryDetails = async (req, res) => {
+  try {
+    // const user = await getUser(req.params.userId);
+
+    // if (!user) {
+    //   return serverResponse(res, 404, { message: "user doesn't exist" });
+    // }
+
+    const history = await getUserHistory(req.params.userId);
+
+    if (!history) {
+      return serverResponse(res, 404, { message: "The user has no task history" });
+    }
+
+    return serverResponse(res, 200, history);
+  } catch (e) {
+    return serverResponse(res, 500, {
+      message: "Internal error while trying to get user task history",
     });
   }
 };
