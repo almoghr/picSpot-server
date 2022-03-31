@@ -16,10 +16,17 @@ const HistorySchema = new Schema({
         type: Date,
         default: Date.now,
       },
-    status: {
+      status: {
         type: String,
-        required: true
-    }
+        required: true,
+        enum: [
+          "Failure_blur",
+          "Failure_dark",
+          "Failure_job_not_done",
+          "Failure_out_of_time",
+          "Success"
+        ],
+      },
 });
 
 const  History = model('History', HistorySchema);

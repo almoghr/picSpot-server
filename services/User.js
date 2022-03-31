@@ -16,3 +16,7 @@ export const createUser = (user) => {
 export const deleteUser = (userId) => {
   return User.findOneAndDelete({ _id: userId });
 };
+
+export const getUserHistory = (userId) => {
+  return User.find({ _id: userId }).populate("history");
+};

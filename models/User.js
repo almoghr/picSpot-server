@@ -74,6 +74,10 @@ const UserSchema = new Schema({
         default: Date.now
       }
     },
+  history: [{
+    type: Schema.Types.ObjectId,
+    ref: "History",
+  }],
   wallet: {
     balance: { type: Number, default: 0 },
     withdrawals: [
